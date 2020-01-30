@@ -1,0 +1,166 @@
+\documentclass{beamer}
+
+\title{Hashtables}
+
+\usepackage{listings,graphicx}
+\lstset{language=Ruby,basicstyle=\small}
+
+\subtitle{Lunch \& Learn}
+\author{Ethan Kent}
+\date{\today}
+\subject{Computer Science}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}
+    \frametitle{Purpose}
+
+    The goal of this presentation is to discuss what hashtables are, how they
+    work, and the tradeoffs that go along with different designs.
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Data structures and tradeoffs}
+    \framesubtitle{Linked lists}
+
+    \texttt{O(1)} insertion and popping; \texttt{O(n)} for search, access by
+    position.
+
+    \begin{lstlisting}
+Node = Struct.new(:value, :next_node)
+
+node1 =  Node.new(0)
+node2 =  Node.new(1)
+node3 =  Node.new(2)
+node4 =  Node.new(3)
+
+node1.next_node = node2
+node2.next_node = node3
+node3.next_node = node4
+node4.next_node = :null_pointer
+
+puts node1
+    \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+    \frametitle{Data structures and tradeoffs}
+    \framesubtitle{Arrays}
+
+    Linked lists have pointers to arbitrary other locations in memory. By
+    contrast, arrays are contiguous locations in memory.
+
+    \vspace{1em}
+
+    Arrays have \texttt{O(1)} insertion, popping, and access by position, and
+    \texttt{O(n)} search.
+
+    \begin{lstlisting}[language=C]
+int * my_array;
+
+my_array = (int * ) malloc(sizeof(int) * 50);
+
+for(i = 0; i < 50; ++i) {
+    my_array[i] = 0;
+}
+    \end{lstlisting}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Data structures and tradeoffs}
+    \framesubtitle{The desire for constant-time ``find'' operations}
+
+    \begin{itemize}
+        \item With a linked list, we can only find an element by starting at
+              the beginning and searching every spot. We can't even go directly to
+              an element if we know its index.
+        \item With a vector, we can only find an element by starting at the
+              beginning and searching every spot. But we \emph{can} go
+              directly to an element if we know its index.
+    \end{itemize}
+
+    \vspace{1em}
+
+    It would be nice would be to have some way to use the value we're
+    checking for \emph{to tell us where to look}, so we could go directly
+    there.
+\end{frame}
+
+\begin{frame}
+    \frametitle{An analogy}
+    What if we had a machine that could use the description of your backpack:
+
+    \begin{center}
+        \includegraphics[height=0.3\textheight]{backpack.jpg}
+    \end{center}
+
+    and tell you it belongs in locker 57?
+
+    \begin{center}
+        \includegraphics[width=0.3\textheight]{lockers.jpg}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+    \frametitle{An analogy}
+
+    What else would our machine have to do? It should---
+
+    \begin{itemize}
+        \item Always give you the same answer given the same backpack.
+        \item Not put every backpack in locker 57.
+        \item Not put most backpacks in just a few lockers.
+        \item Not put most blue backpacks in just a few lockers.
+        \item Give you an answer pretty quickly.
+    \end{itemize}
+
+    \vspace{1em}
+
+    If we had that, we could walk directly do locker 57 and get our backpack,
+    without the need to search.
+\end{frame}
+
+\begin{frame}
+    \frametitle{An analogy}
+    \begin{center}
+        \includegraphics[width=0.5\textheight]{lockers.jpg}
+    \end{center}
+
+    But there are still some problems. What if---
+
+    \begin{itemize}
+        \item More than one backpack is assigned to the same locker (assume
+              only one backpack can fit)?
+        \item There are more backpacks than lockers?
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Hashtables}
+    We have now considered several aspects of a data structure called a
+    \emph{hashtable}.
+
+    \vspace{1em}
+
+    \begin{itemize}
+        \item The machine that turns the backpack into a locker assignment is
+              hash function.
+        \item The characteristics of a good backpack assigner are the
+              characteristics of a good hash function:
+              \begin{itemize}
+                  \item Deterministic,
+                  \item Fast,
+                  \item Uniform, and
+                  \item Avalanching.
+              \end{itemize}
+        \item The problems you can run into are the same as those with a hashtable:
+              \begin{itemize}
+                  \item Collisions, and
+                  \item Load factor.
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\end{document}
