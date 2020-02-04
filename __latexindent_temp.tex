@@ -164,23 +164,6 @@ for(i = 0; i < 50; ++i) {
 \end{frame}
 
 \begin{frame}
-    \frametitle{The key idea}
-
-    If we can use \emph{the data itself} to tell us where the data belongs,
-    and if we can go directly to where the data belongs, we get best-case
-    \texttt{O(1)}. This compares favorably with:
-
-    \vspace{1em}
-
-    \begin{itemize}
-        \item Fully sorting the data (\texttt{O(n log n)} for insertion).
-        \item Traversing a linked list or array (\texttt{O(n)} for search).
-        \item Using a balanced data structure (\texttt{O(log n)} for common
-              operations).
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
     \frametitle{The birthday problem}
 
     You're throwing a party. You invite one person at a time until two people
@@ -193,7 +176,7 @@ for(i = 0; i < 50; ++i) {
     \frametitle{The birthday problem}
     \begin{lstlisting}
 require "set"
-year = (1..365).to_a
+year = (1..10000).to_a
 num_runs = 100_000
 
 total = num_runs.times.reduce(0.0) do |total|
@@ -230,65 +213,13 @@ puts total / num_runs
     might expect:
 
     \begin{itemize}
-        \item With 100 buckets, the average first collision occurs around the
-              13th element.
+        \item With 100 buckets, the average first collision occurs with
+              around the 13th element.
         \item With 1,000, it's around the 40th. 
-        \item With 10,000, it's around the 125th.
+        \item With 10,000, its around the 125th.
     \end{itemize}
+    
 \end{frame}
 
-\begin{frame}
-    \frametitle{Collisions}
-    We'll discuss two ways to deal with collisions:
-
-    \begin{enumerate}
-        \item Separate chaining.
-        \item Open addressing.
-    \end{enumerate}
-\end{frame}
-
-\begin{frame}
-    \frametitle{Separate chaining}
-
-    Our backpack machine could send us to a locker. That locker could have a
-    note telling us to go to another locker. If that locker is full, it could
-    tell us to go to another locker. And so on. Once we find an empty locker,
-    we put our backpack there.
-
-
-    \vspace{1em}
-
-    In other words, the locker could contain a (pointer to) a linked list.
-
-    \vspace{1em}
-
-    To see if the hashtable contains a value, we can find the right bucket by
-    hashing the value, then search the linked list. If we get to the end and
-    haven't seen our value, we know it isn't there.
-\end{frame}
-
-\begin{frame}
-    \frametitle{Open addressing}
-
-    Our backpack machine could send us to a locker. If that locker is full,
-    we could keep checking the next locker, and the next, and the next, until
-    we found an empty one, then put our backpack there.
-
-    \vspace{1em}
-
-    In other words, the array can actually hold the data, rather than holding
-    a pointer to the data.
-
-    \vspace{1em}
-
-    To see if the hashtable contains a value, we can find the right bucket by
-    hashing the value, then check the bucket, and if it's full, the next
-    bucket, and so on, until we either find our value or find an empty
-    bucket.
-\end{frame}
-
-\begin{frame}
-
-\end{frame}
 
 \end{document}
