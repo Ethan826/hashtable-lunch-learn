@@ -288,7 +288,41 @@ puts total / num_runs
 \end{frame}
 
 \begin{frame}
+    \frametitle{Open addressing and collisions}
 
+    Open addressing is often preferable. Among other advantages, it can
+    sometimes benefit from caching. But collisions are a bigger problem.
+
+    \vspace{1em}
+
+    \begin{itemize}
+        \item Collisions with separate chaining are straightforward to
+              handle: add to the linked lists.
+        \item With open addressing, there are problems---
+        \begin{itemize}
+            \item The table can become completely full.
+            \item Collisions cause more collisions.
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Open addressing and deletions}
+
+    When you delete an element from a hashtable, there's a problem. You
+    create an empty space. But remember what an empty space can mean.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Load factor}
+
+    When the load factor of a hashtable gets above a certain level, we may
+    need to rehash: grow the hashtable and move elements around.
+\end{frame}
+
+\begin{frame}
+    \frametitle{Optimizations}
+
+    Robin Hood hashing is one optimization we'll discuss. There are others.
+\end{frame}
 \end{document}
